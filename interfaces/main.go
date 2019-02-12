@@ -12,6 +12,11 @@ type geometry interface {
 	perim() float64
 }
 
+type sound interface {
+	scream() string
+	talk() string
+}
+
 // For our example we'll implement this interface on
 // `rect` and `circle` types.
 type rect struct {
@@ -19,6 +24,17 @@ type rect struct {
 }
 type circle struct {
 	radius float64
+}
+
+type child struct {
+	age            int
+	weight, height float64
+}
+
+type adult struct {
+	age            int
+	weight, height float64
+	passport       string
 }
 
 // To implement an interface in Go, we just need to
@@ -29,6 +45,14 @@ func (r rect) area() float64 {
 }
 func (r rect) perim() float64 {
 	return 2*r.width + 2*r.height
+}
+
+func (c child) talk(name, smalltalk string) string {
+	return ("Hello, my name is " + name + ". " + smalltalk)
+}
+
+func (c child) scream() string {
+	return "/&%$·$%&#"
 }
 
 // The implementation for `circle`s.
@@ -52,6 +76,10 @@ func measure(g geometry) {
 func main() {
 	r := rect{width: 3, height: 4}
 	c := circle{radius: 5}
+
+	ch := child{age: 2, weight: 6.200, height: 40.3}
+	fmt.Println(ch.scream())
+	fmt.Println(ch.talk("Ian", "Well, I actually don't speak so much"))
 
 	// The `circle` and `rect` struct types both
 	// implement the `geometry` interface so we can use
